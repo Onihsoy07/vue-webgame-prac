@@ -8,14 +8,14 @@
 </head>
 <body>
     <div id="root">
-        <word-relay></word-relay>
-        <word-relay></word-relay>
-        <word-relay></word-relay>
+        <word-relay start-word="초밥"></word-relay>
+        <word-relay start-word="시작"></word-relay>
+        <word-relay start-word="학교"></word-relay>
     </div>
     
 </body>
 <script>
-    Vue.component('word-relay', {
+    Vue.component('wordRelay', {
         template: `
             <div>
                 <div>{{ word }}</div>
@@ -26,9 +26,11 @@
                 <div>{{ result }}</div>
             </div>
         `,
+        props: ['startWord'],
         data() {
+            console.log(this);
             return {
-                word: '시작',
+                word: this.startWord,
                 result: '',
                 value: '',
             }
