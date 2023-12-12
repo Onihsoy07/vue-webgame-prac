@@ -2,7 +2,12 @@
     <div>
         <div id="screen" :class="state" @click="onClickScreen">{{ message }}</div>
         <div>
-            <div>반응속도시간 : {{ result.slice(-1)[0] }}</div>
+            <div>반응속도시간 : {{ result.slice(-1)[0] || 0 }} ms</div>
+            <div>평군시간 : 
+                <span v-if="result.length!=0">{{ (result.reduce((a, c) => a + c, 0) / result.length).toFixed(1) }}</span>
+                <span v-else>0</span>
+                 ms
+            </div>
             <button @click="onReset">리셋</button>
         </div>
     </div>
@@ -25,7 +30,7 @@
         },
         methods: {
             onReset() {
-
+                this.result = [];
             },
             onClickScreen() {
                 if(this.state === 'waiting') {
@@ -39,11 +44,14 @@
                 } else if(this.state === 'ready') {
                     this.state = 'now';
                     this.message = '너무 빠르게 눌렀습니다.';
+                    clearTimeout(this.timeout);
                 } else if(this.state === 'now') {
-                    this.endTime = new Date();
+                    if(this.message === '누르세요!') {
+                        this.endTime = new Date();
+                        this.result.push(this.endTime - this.startTime);
+                    }
                     this.state = 'waiting';
                     this.message = '클릭해서 시작하세요.';
-                    this.result.push(this.endTime - this.startTime);
                 }
             }
 
