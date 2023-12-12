@@ -1,15 +1,15 @@
 <template>
     <div>
         <div id="screen" :class="state" @click="onClickScreen">{{ message }}</div>
-        <div>
+        <template v-if="true">
             <div>반응속도시간 : {{ result.slice(-1)[0] || 0 }} ms</div>
             <div>평군시간 : 
-                <span v-if="result.length!=0">{{ (result.reduce((a, c) => a + c, 0) / result.length).toFixed(1) }}</span>
+                <span v-if="result.length!=0">{{ average }}</span>
                 <span v-else>0</span>
                  ms
             </div>
             <button @click="onReset">리셋</button>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -28,6 +28,11 @@
 
             }
         },
+        computed: {
+            average() {
+                return (this.result.reduce((a, c) => a + c, 0) / this.result.length).toFixed(1);
+            }
+        },
         methods: {
             onReset() {
                 this.result = [];
@@ -42,12 +47,12 @@
                         this.startTime = new Date();
                     }, Math.floor(Math.random() * 1000) + 2000);
                 } else if(this.state === 'ready') {
+                    clearTimeout(this.timeout);
                     this.state = 'now';
                     this.message = '너무 빠르게 눌렀습니다.';
-                    clearTimeout(this.timeout);
                 } else if(this.state === 'now') {
+                    this.endTime = new Date();
                     if(this.message === '누르세요!') {
-                        this.endTime = new Date();
                         this.result.push(this.endTime - this.startTime);
                     }
                     this.state = 'waiting';
