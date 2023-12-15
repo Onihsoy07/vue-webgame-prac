@@ -28,6 +28,11 @@ export default {
             },
             imageStartXAxis: '',
             interval: null,
+            scoreConver: {
+                'rock': 0,
+                'scissors': 1,
+                'paper': -1,
+            }
 
         }
     },
@@ -43,17 +48,33 @@ export default {
     methods: {
         onClickButton(choice) {
             clearInterval(this.interval);
-            console.log(this.computerChoice());
-            console.log(choice);
+            const aaa = this.computerChoice(this.imageStartXAxis);
+            console.log(aaa);
+            // const computerScore = this.scoreConver[this.computerChoice(this.imageStartXAxis)];
+            // const myScore = this.scoreConver[choice];
+            // const diff = myScore - computerScore;
+            // console.log(myScore);
+            // console.log(computerScore);
+            // console.log(diff);
+            // if(diff === 0) {
+            //     this.result = '비겼습니다.';
+            // } else if([-1, 2].includes(diff)) {
+            //     this.result = '이겼습니다.';
+            //     this.score += 1;
+            // } else {
+            //     this.result = '졌습니다.';
+            //     this.score -= 1;
+            // }
             return choice;
         },
-        computerChoice() {
+        computerChoice(computerRSPAxis) {
             Object.entries(this.rspStartXAxis).find(function(v) {
-                if(v.includes[this.imageStartXAxis]) {
-                    console.log(v);
+                if(v[1] === computerRSPAxis) {
+                    console.log(v[0]);
+                    return v[0];
                 }
             });
-            return null;
+            // return null;
         },
     },
     created() {
@@ -73,7 +94,7 @@ export default {
         }, 70);
     },
     updated() {
-        console.log('updated');
+        // console.log('updated');
     },
     beforeUnmount() {
         console.log('beforeUnmount');
