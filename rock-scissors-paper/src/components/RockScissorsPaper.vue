@@ -2,9 +2,9 @@
     <div>
         <div id="computer" :style="computedStyleObject" :class="{}"></div>
         <div>
-            <button @click="onClickButton('바위')">바위</button>
-            <button @click="onClickButton('가위')">가위</button>
-            <button @click="onClickButton('보')">보</button>
+            <button @click="onClickButton('rock')">바위</button>
+            <button @click="onClickButton('scissors')">가위</button>
+            <button @click="onClickButton('paper')">보</button>
         </div>
         <div>{{ result }}</div>
         <div>점수 : {{ score }}점</div>
@@ -17,7 +17,7 @@ export default {
     data() {
         return {
             result: '',
-            score: '',
+            score: 0,
             rspStartXAxis: {
                 rock: '0px',
                 scissors: '-135px',
@@ -32,7 +32,8 @@ export default {
                 'rock': 0,
                 'scissors': 1,
                 'paper': -1,
-            }
+            },
+            rspFnRest: false,
 
         }
     },
@@ -47,35 +48,50 @@ export default {
     },
     methods: {
         onClickButton(choice) {
+            if(this.rspFnRest === true) {
+                return;
+            }
+            this.rspFnRest = true;
             clearInterval(this.interval);
-            const aaa = this.computerChoice(this.imageStartXAxis);
-            console.log(aaa);
-            // const computerScore = this.scoreConver[this.computerChoice(this.imageStartXAxis)];
-            // const myScore = this.scoreConver[choice];
-            // const diff = myScore - computerScore;
-            // console.log(myScore);
-            // console.log(computerScore);
-            // console.log(diff);
-            // if(diff === 0) {
-            //     this.result = '비겼습니다.';
-            // } else if([-1, 2].includes(diff)) {
-            //     this.result = '이겼습니다.';
-            //     this.score += 1;
-            // } else {
-            //     this.result = '졌습니다.';
-            //     this.score -= 1;
-            // }
-            return choice;
+            const computerScore = this.scoreConver[this.computerChoice(this.imageStartXAxis)];
+            const myScore = this.scoreConver[choice];
+            const diff = myScore - computerScore;
+            if(diff === 0) {
+                this.result = '비겼습니다.';
+            } else if([-1, 2].includes(diff)) {
+                this.result = '이겼습니다.';
+                this.score += 1;
+            } else {
+                this.result = '졌습니다.';
+                this.score -= 1;
+            }
+            setTimeout(() => {
+                this.randomRSP();
+                setTimeout(() => {
+                    this.rspFnRest = false;
+                }, 300)
+            }, 700);
         },
         computerChoice(computerRSPAxis) {
+            let computerRSPResult = '';
             Object.entries(this.rspStartXAxis).find(function(v) {
                 if(v[1] === computerRSPAxis) {
-                    console.log(v[0]);
-                    return v[0];
+                    computerRSPResult = v[0];
                 }
             });
-            // return null;
+            return computerRSPResult;
         },
+        randomRSP() {
+            this.interval = setInterval(() => {
+                if(this.imageStartXAxis === this.rspStartXAxis.rock) {
+                    this.imageStartXAxis = this.rspStartXAxis.scissors;
+                } else if(this.imageStartXAxis === this.rspStartXAxis.scissors) {
+                    this.imageStartXAxis = this.rspStartXAxis.paper;
+                } else if(this.imageStartXAxis === this.rspStartXAxis.paper) {
+                    this.imageStartXAxis = this.rspStartXAxis.rock;
+                }
+            }, 70);
+        }
     },
     created() {
         console.log('created');
@@ -83,15 +99,7 @@ export default {
     mounted() {
         this.imageStartXAxis = this.rspStartXAxis.rock;
         console.log('mounted');
-        this.interval = setInterval(() => {
-            if(this.imageStartXAxis === this.rspStartXAxis.rock) {
-                this.imageStartXAxis = this.rspStartXAxis.scissors;
-            } else if(this.imageStartXAxis === this.rspStartXAxis.scissors) {
-                this.imageStartXAxis = this.rspStartXAxis.paper;
-            } else if(this.imageStartXAxis === this.rspStartXAxis.paper) {
-                this.imageStartXAxis = this.rspStartXAxis.rock;
-            }
-        }, 70);
+        this.randomRSP();
     },
     updated() {
         // console.log('updated');
