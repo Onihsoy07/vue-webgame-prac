@@ -2,10 +2,11 @@
     <div>
         <div>당첨 숫자</div>
         <div id="result-window">
-            <lotto-ball v-for="(ball, idx) in lottoBalls" :key="idx" :number="ball"></lotto-ball>
+            <lotto-ball v-for="(ball, idx) in lottoWinBalls" :key="idx" :number="ball"></lotto-ball>
         </div>
         <div>보너스</div>
-        <lotto-ball v-if="bonusBall"></lotto-ball>
+        <lotto-ball v-if="bonusBall" :number="bonusBall">{{ bonusBall }}</lotto-ball>
+        <br>
         <button v-if="redo">다시 하기</button>
     </div>
 </template>
@@ -14,7 +15,14 @@
 import LottoBall from './LottoBall.vue';
 
 function getLottoBalls() {
-    return null;
+    const randomNumbers = [];
+    while(randomNumbers.length < 7) {
+        const inNumber = Math.ceil(Math.random() * 45);
+        if(!randomNumbers.includes(inNumber)) {
+            randomNumbers.push(inNumber);
+        }
+    }
+    return randomNumbers;
 }
 
 export default {
@@ -23,6 +31,7 @@ export default {
         return {
             redo: false,
             lottoBalls: getLottoBalls(),
+            lottoWinBalls: [],
             bonusBall: null,
 
         }
@@ -39,7 +48,18 @@ export default {
     components: {
         LottoBall,
 
-    }
+    },
+    mounted() {
+        for(let i = 0; i < this.lottoBalls.length - 1; i++) {
+            setTimeout(() => {
+                this.lottoWinBalls.push(this.lottoBalls[i]);
+            }, (i + 1) * 1000);
+        }
+        setTimeout(() => {
+            this.bonusBall = this.lottoBalls[6];
+            this.redo = true;
+        }, 7000);
+    },
 };
 </script>
 
