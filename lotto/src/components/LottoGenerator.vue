@@ -7,7 +7,7 @@
         <div>보너스</div>
         <lotto-ball v-if="bonusBall" :number="bonusBall">{{ bonusBall }}</lotto-ball>
         <br>
-        <button v-if="redo">다시 하기</button>
+        <button type="button" v-if="redo" @click="onClickRedo()">다시 하기</button>
     </div>
 </template>
 
@@ -37,7 +37,24 @@ export default {
         }
     },
     methods: {
-
+        onClickRedo() {
+            this.redo = false;
+            this.lottoBalls = getLottoBalls();
+            this.lottoWinBalls = [];
+            this.bonusBall = null;
+            this.showBalls();
+        },
+        showBalls() {
+            for(let i = 0; i < this.lottoBalls.length - 1; i++) {
+                setTimeout(() => {
+                    this.lottoWinBalls.push(this.lottoBalls[i]);
+                }, (i + 1) * 700);
+            }
+            setTimeout(() => {
+                this.bonusBall = this.lottoBalls[6];
+                this.redo = true;
+            }, 4900);
+        }
     },
     computed: {
 
@@ -50,15 +67,7 @@ export default {
 
     },
     mounted() {
-        for(let i = 0; i < this.lottoBalls.length - 1; i++) {
-            setTimeout(() => {
-                this.lottoWinBalls.push(this.lottoBalls[i]);
-            }, (i + 1) * 1000);
-        }
-        setTimeout(() => {
-            this.bonusBall = this.lottoBalls[6];
-            this.redo = true;
-        }, 7000);
+        this.showBalls();
     },
 };
 </script>
