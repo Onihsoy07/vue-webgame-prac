@@ -25,6 +25,8 @@ function getLottoBalls() {
     return randomNumbers;
 }
 
+const timeouts = [];
+
 export default {
     name: 'LottoGenerator',
     data() {
@@ -46,11 +48,11 @@ export default {
         },
         showBalls() {
             for(let i = 0; i < this.lottoBalls.length - 1; i++) {
-                setTimeout(() => {
+                timeouts[i] = setTimeout(() => {
                     this.lottoWinBalls.push(this.lottoBalls[i]);
                 }, (i + 1) * 700);
             }
-            setTimeout(() => {
+            timeouts[6] = setTimeout(() => {
                 this.bonusBall = this.lottoBalls[6];
                 this.redo = true;
             }, 4900);
@@ -68,6 +70,11 @@ export default {
     },
     mounted() {
         this.showBalls();
+    },
+    unmounted() {
+        timeouts.forEach((t) => {
+            clearTimeout(t);
+        });
     },
 };
 </script>

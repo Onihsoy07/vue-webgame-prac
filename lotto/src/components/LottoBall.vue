@@ -1,5 +1,5 @@
 <template>
-    <div class="ball" :style="{ background }">
+    <div class="ball" :style="styleObject">
         {{ number }}
     </div>
 </template>
@@ -9,7 +9,7 @@ export default {
     name: 'LottoBall',
     data() {
         return {
-            background: '',
+            // background: '',
             
         }
     },
@@ -17,7 +17,23 @@ export default {
 
     },
     computed: {
-
+        styleObject() {
+            let background;
+            if(this.number <= 10) {
+                background = 'red';
+            } else if(this.number <= 20) {
+                background = 'orange';
+            } else if(this.number <= 30) {
+                background = 'yellow';
+            } else if(this.number <= 40) {
+                background = 'blue';
+            } else {
+                background = 'green';
+            }
+            return {
+                background
+            };
+        }
     },
     watch: {
 
@@ -39,5 +55,6 @@ export default {
     font-size: 20px;
     text-align: center;
     margin: 10px 10px;
+    color: black;
 }
 </style>
