@@ -44,7 +44,7 @@ export default {
             this.lottoBalls = getLottoBalls();
             this.lottoWinBalls = [];
             this.bonusBall = null;
-            this.showBalls();
+            // this.showBalls();
         },
         showBalls() {
             for(let i = 0; i < this.lottoBalls.length - 1; i++) {
@@ -62,7 +62,16 @@ export default {
 
     },
     watch: {
-        
+        lottoWinBalls(value, oldValue) {
+            console.log(value, oldValue);
+            if(value.length === 0) {
+                this.showBalls();
+            }
+        }, 
+        bonusBall(value, oldValue) {
+            console.log('bunusBall : ', oldValue, value);
+        }
+
     },
     components: {
         LottoBall,
