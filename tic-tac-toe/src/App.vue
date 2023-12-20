@@ -1,12 +1,25 @@
 <template>
-
+  <tic-tac-toe></tic-tac-toe>
 </template>
 
 <script>
+import TicTacToe from './components/TicTacToeComponent.vue'
+
 export default {
   name: 'App',
   components: {
+    TicTacToe,
     
+  },
+  data() {
+    return {
+      tableData: [
+                ['', '', ''],
+                ['', '', ''],
+                ['', '', ''],
+            ],
+            turn: 'O',
+    }
   }
 }
 </script>
