@@ -12,8 +12,11 @@ export default {
     },
     methods: {
         onClickTd() {
-            console.log(this.$root.$data);
-            this.$root.$data.turn = this.$root.$data.turn === 'O' ? 'X' : 'O';
+            if(this.cellData === '') {
+                const rootData = this.$root.$data;
+                rootData.tableData[this.rowIdx][this.cellIdx] = rootData.turn;
+                rootData.turn = rootData.turn === 'O' ? 'X' : 'O';
+            }
         }
     },
     props: {
