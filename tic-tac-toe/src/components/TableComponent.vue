@@ -1,6 +1,7 @@
 <template>
     <table>
         <tr-component v-for="(rowData, idx) in tableData" :key="idx" :row-data="rowData" :row-idx="idx"></tr-component>
+        <div>{{ result }}</div>
     </table>
 </template>
 
@@ -23,6 +24,7 @@ export default {
     },
     props: {
         tableData: Array,
+        result: String,
 
     },
 };

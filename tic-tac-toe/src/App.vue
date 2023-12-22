@@ -1,5 +1,5 @@
 <template>
-  <tic-tac-toe :table-data="tableData"></tic-tac-toe>
+  <tic-tac-toe :table-data="tableData" :result="result"></tic-tac-toe>
 </template>
 
 <script>
@@ -14,11 +14,13 @@ export default {
   data() {
     return {
       tableData: [
-                ['', '', ''],
-                ['', '', ''],
-                ['', '', ''],
-            ],
-            turn: 'O',
+        ['', '', ''],
+        ['', '', ''],
+        ['', '', ''],
+      ],
+      turn: 'O',
+      result: '',
+
     }
   }
 }
