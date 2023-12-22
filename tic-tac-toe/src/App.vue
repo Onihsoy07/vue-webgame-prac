@@ -19,6 +19,7 @@ export default {
         ['', '', ''],
       ],
       turn: 'O',
+      turnCount: 0,
       result: '',
 
     }

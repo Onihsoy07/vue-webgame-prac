@@ -15,6 +15,7 @@ export default {
             if(this.cellData === '') {
                 const rootData = this.$root.$data;
                 rootData.tableData[this.rowIdx][this.cellIdx] = rootData.turn;
+                rootData.turnCount++;
 
                 let win = false;
                 if(rootData.tableData[this.rowIdx][0] === rootData.turn && rootData.tableData[this.rowIdx][1] === rootData.turn && rootData.tableData[this.rowIdx][2] === rootData.turn) {
@@ -35,6 +36,12 @@ export default {
                     rootData.tableData = [['', '', ''], ['', '', ''], ['', '', '']];
                     rootData.turn = 'O';
                     return win;
+                }
+                if(rootData.turnCount === 9) {
+                    rootData.result = '무승부';
+                    rootData.tableData = [['', '', ''], ['', '', ''], ['', '', '']];
+                    rootData.turn = 'O';
+                    return;
                 }
 
                 rootData.turn = rootData.turn === 'O' ? 'X' : 'O';
