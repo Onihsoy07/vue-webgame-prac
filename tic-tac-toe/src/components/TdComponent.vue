@@ -35,6 +35,7 @@ export default {
                     rootData.result = rootData.turn + '승리';
                     rootData.tableData = [['', '', ''], ['', '', ''], ['', '', '']];
                     rootData.turn = 'O';
+                    rootData.turnCount = 0;
                     return win;
                 }
                 if(rootData.turnCount === 9) {

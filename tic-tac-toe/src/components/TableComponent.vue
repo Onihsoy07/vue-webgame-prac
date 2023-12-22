@@ -1,8 +1,10 @@
 <template>
-    <table>
-        <tr-component v-for="(rowData, idx) in tableData" :key="idx" :row-data="rowData" :row-idx="idx"></tr-component>
-        <div>{{ result }}</div>
-    </table>
+    <div>
+        <table>
+            <tr-component v-for="(rowData, idx) in tableData" :key="idx" :row-data="rowData" :row-idx="idx"></tr-component>
+        </table>
+        <div style="width: 120px;">{{ result }}</div>
+    </div>
 </template>
 
 <script>
