@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div style="width: 120px;">{{ turn }}님 턴입니다</div>
         <table>
             <tr-component v-for="(rowData, idx) in tableData" :key="idx" :row-data="rowData" :row-idx="idx"></tr-component>
         </table>
@@ -27,6 +28,7 @@ export default {
     props: {
         tableData: Array,
         result: String,
+        turn: String,
 
     },
 };

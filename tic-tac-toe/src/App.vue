@@ -1,5 +1,5 @@
 <template>
-  <tic-tac-toe :table-data="tableData" :result="result"></tic-tac-toe>
+  <tic-tac-toe :table-data="tableData" :result="result" :turn="turn"></tic-tac-toe>
 </template>
 
 <script>
