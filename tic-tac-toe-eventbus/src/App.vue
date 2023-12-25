@@ -1,14 +1,19 @@
 <template>
-  <tic-tac-toe :table-data="tableData" :result="result" :turn="turn"></tic-tac-toe>
+  <div>
+    <tic-tac-toe :table-data="tableData" :result="result" :turn="turn" @on-click-td="onClickTd"></tic-tac-toe>
+    <EmitTestVue @emit-post-test="onEmitPostTest"></EmitTestVue>
+  </div>
 </template>
 
 <script>
+import EmitTestVue from './components/EmitTest.vue';
 import TicTacToe from './components/TicTacToeComponent.vue';
 
 export default {
   name: 'App',
   components: {
     TicTacToe,
+    EmitTestVue,
     
   },
   data() {
@@ -25,9 +30,12 @@ export default {
     }
   },
   methods: {
-    onClickTd(cellData) {
+    onEmitPostTest(word) {
+      console.log(word);
+    },
+    onClickTd() {
       console.log('aaaaaaaaaaaa');
-      if(cellData === '') {
+      if(this.turnCount >= 0) {
         this.tableData[this.rowIdx][this.cellIdx] = this.turn;
         this.turnCount++;
 
@@ -64,7 +72,6 @@ export default {
     }
   },
   mounted() {
-    this.emit.on('onClickTd', this.onClickTd);
   },
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <td @click="onClickTd">{{ cellData }}</td>
+    <td @click="$emit('onClickTd')">{{ cellData }}</td>
 </template>
 
 <script>
@@ -11,16 +11,21 @@ export default {
         }
     },
     methods: {
-        onClickTd() {
-            this.emit.emit('onClickTd', this.cellData);
-        }
+        // onClickTd() {
+        //     this.emit.emit('onClickTd', this.cellData);
+        // }
     },
     props: {
         cellData: String,
         rowIdx: Number,
         cellIdx: Number,
 
-    }
+    },
+    emits: [
+        "onClickTd",
+        
+    ],
+
 };
 </script>
 
