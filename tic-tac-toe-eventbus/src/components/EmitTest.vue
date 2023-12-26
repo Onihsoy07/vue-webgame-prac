@@ -1,6 +1,6 @@
 <template>
     <div>
-        <button @click="$emit('emitPostTest', 'helloaaa')">버튼</button>
+        <button @click="$emit('emitPostTest', 'helloChild')">버튼</button>
     </div>
 </template>
 

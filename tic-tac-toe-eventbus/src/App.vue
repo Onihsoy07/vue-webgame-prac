@@ -1,19 +1,20 @@
 <template>
   <div>
     <tic-tac-toe :table-data="tableData" :result="result" :turn="turn" @on-click-td="onClickTd"></tic-tac-toe>
-    <EmitTestVue @emit-post-test="onEmitPostTest"></EmitTestVue>
+    <EmitParentTestVue @emit-post-test="onEmitPostTest"></EmitParentTestVue>
   </div>
 </template>
 
 <script>
-import EmitTestVue from './components/EmitTest.vue';
+import EmitParentTestVue from './components/EmitParentTest.vue';
 import TicTacToe from './components/TicTacToeComponent.vue';
+
 
 export default {
   name: 'App',
   components: {
     TicTacToe,
-    EmitTestVue,
+    EmitParentTestVue,
     
   },
   data() {
