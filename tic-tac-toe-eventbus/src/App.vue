@@ -34,9 +34,10 @@ export default {
     onEmitPostTest(word) {
       console.log(word);
     },
-    onClickTd() {
-      console.log('aaaaaaaaaaaa');
-      if(this.turnCount >= 0) {
+    onClickTd(tdCellData) {
+      console.log(tdCellData);
+      if(tdCellData === '') {
+        console.log('들어옴');
         this.tableData[this.rowIdx][this.cellIdx] = this.turn;
         this.turnCount++;
 

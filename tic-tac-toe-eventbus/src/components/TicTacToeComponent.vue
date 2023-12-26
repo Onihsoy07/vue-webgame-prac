@@ -1,5 +1,5 @@
 <template>
-    <table-component :tableData="tableData"></table-component>
+    <table-component :tableData="tableData" :turn="turn" @on-click-td="$emit('onClickTd')"></table-component>
 </template>
 
 <script>
@@ -9,12 +9,6 @@ export default{
     name: 'TicTacToe',
     data() {
         return {
-            tableData: [
-                ['', '', ''],
-                ['', '', ''],
-                ['', '', ''],
-            ],
-            turn: 'O',
 
         }
     },
@@ -23,6 +17,11 @@ export default{
     },
     components: {
         TableComponent,
+
+    },
+    props: {
+        tableData: Array,
+        turn: String,
 
     }
 };

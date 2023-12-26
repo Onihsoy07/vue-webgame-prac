@@ -1,6 +1,6 @@
 <template>
     <tr>
-        <td-component v-for="(cellData, idx) in rowData" :key="idx" :cell-data="cellData" :row-idx="rowIdx" :cell-idx="idx"></td-component>
+        <td-component v-for="(cellData, idx) in rowData" :key="idx" :cell-data="cellData" :row-idx="rowIdx" :cell-idx="idx" @on-click-td="$emit('onClickTd')"></td-component>
     </tr>
 </template>
 
