@@ -2,28 +2,22 @@
     <td @click="onClickTd">{{ cellData }}</td>
 </template>
 
-<script>
-import { CLICK_CELL } from '../store.js';
+<script setup>
+import { useStore } from 'vuex';
+import { defineProps } from 'vue';
 
-export default {
-    name: 'TdComponent',
-    data() {
-        return {
+const props = defineProps({
+    cellData: String,
+    rowIdx: Number,
+    cellIdx: Number,
 
-        }
-    },
-    methods: {
-        onClickTd() {
-            this.$store.commit(CLICK_CELL);
-        }
-    },
-    props: {
-        cellData: String,
-        rowIdx: Number,
-        cellIdx: Number,
+})
 
-    }
-};
+const store = useStore();
+const onClickTd = () => {
+    store.commit('CLICK_CELL', props.rowIdx, props.cellIdx);
+}
+
 </script>
 
 <style scoped>

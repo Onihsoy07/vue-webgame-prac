@@ -1,4 +1,4 @@
-import Vuex from 'vuex';
+import { createStore } from 'vuex';
 
 export const SET_TURN = 'SET_TURN';
 export const SET_RESULT = 'SET_RESULT';
@@ -7,7 +7,7 @@ export const CHANGE_TURN = 'CHANGE_TURN';
 export const RESET_GAME = 'RESET_GAME';
 
 
-export default new Vuex.Store({
+export default createStore({
     state: {
         tableData: [
             ['', '', ''],
