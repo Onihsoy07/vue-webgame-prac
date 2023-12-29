@@ -1,31 +1,12 @@
 <template>
-    <table-component :tableData="tableData"></table-component>
+    <table-component :tableData="store.state.tableData"></table-component>
 </template>
 
-<script>
+<script setup>
 import TableComponent from './TableComponent.vue';
+import { useStore } from 'vuex';
 
-export default{
-    name: 'TicTacToe',
-    data() {
-        return {
-            tableData: [
-                ['', '', ''],
-                ['', '', ''],
-                ['', '', ''],
-            ],
-            turn: 'O',
-
-        }
-    },
-    methods: {
-
-    },
-    components: {
-        TableComponent,
-
-    }
-};
+const store = useStore(); 
 </script>
 
 <style>

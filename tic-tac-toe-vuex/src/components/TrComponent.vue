@@ -1,32 +1,17 @@
 <template>
     <tr>
-        <td-component v-for="(cellData, idx) in rowData" :key="idx" :cell-data="cellData" :row-idx="rowIdx" :cell-idx="idx"></td-component>
+        <td-component v-for="(cellData, idx) in props.rowData" :key="idx" :row-idx="props.rowIdx" :cell-idx="idx"></td-component>
     </tr>
 </template>
 
-<script>
+<script setup>
 import TdComponent from './TdComponent.vue';
+import { defineProps } from 'vue';
 
-export default {
-    name: 'TrComponent',
-    data() {
-        return {
-
-        }
-    },
-    methods: {
-        
-    },
-    components: {
-        TdComponent,
-
-    },
-    props: {
-        rowData: Array,
-        rowIdx: Number,
-
-    }
-};
+const props = defineProps({
+    rowData: Array,
+    rowIdx: Number,
+});
 </script>
 
 <style scoped>

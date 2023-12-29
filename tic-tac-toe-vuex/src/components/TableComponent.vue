@@ -1,37 +1,24 @@
 <template>
     <div>
-        <div style="width: 120px;">{{ turn }}님 턴입니다</div>
+        <div style="width: 120px;">{{ store.state.turn }}님 턴입니다</div>
         <table>
-            <tr-component v-for="(rowData, idx) in tableData" :key="idx" :row-data="rowData" :row-idx="idx"></tr-component>
+            <tr-component v-for="(rowData, idx) in props.tableData" :key="idx" :row-data="rowData" :row-idx="idx"></tr-component>
         </table>
-        <div style="width: 120px;">{{ result }}</div>
+        <div style="width: 120px;">{{ store.state.result }}</div>
     </div>
 </template>
 
-<script>
+<script setup>
+import { useStore } from 'vuex';
+import { defineProps } from 'vue';
 import TrComponent from './TrComponent.vue';
 
-export default {
-    name: 'TableComponent',
-    data() {
-        return {
+const props = defineProps({
+    tableData: Array,
 
-        }
-    },
-    methods: {
+});
 
-    },
-    components: {
-        TrComponent,
-
-    },
-    props: {
-        tableData: Array,
-        result: String,
-        turn: String,
-
-    },
-};
+const store = useStore();
 </script>
 
 <style scoped>

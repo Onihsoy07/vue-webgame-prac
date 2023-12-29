@@ -33,12 +33,16 @@ export default createStore({
         },
         [RESET_GAME](state) {
             state.turn = 'O';
+            state.turnCount = 0;
             state.tableData = [
                 ['', '', ''],
                 ['', '', ''],
                 ['', '', '']
             ];
         },
+        UP_TURNCOUNT(state) {
+            state.turnCount++;
+        }
     }, // state 동기적으로 수정
     getters: {
 
