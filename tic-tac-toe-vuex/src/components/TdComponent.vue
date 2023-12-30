@@ -1,14 +1,23 @@
 <template>
-    <td @click="onClickTd">{{ store.state.tableData[props.rowIdx][props.cellIdx] }}</td>
+    <td @click="onClickTd">{{ tableDataCom[props.rowIdx][props.cellIdx] }}</td>
 </template>
 
 <script setup>
 import { useStore } from 'vuex';
-import { defineProps } from 'vue';
+import { defineProps, computed } from 'vue';
 
 const store = useStore();
+const tableDataCom = computed(() => {
+    return store.state.tableData;
+});
+const turn = computed(() => {
+    return store.state.turn;
+});
+const turnCount = computed(() => {
+    return store.state.turnCount;
+});
 
-const props = defineProps({
+let props = defineProps({
     rowIdx: Number,
     cellIdx: Number,
 
@@ -18,35 +27,33 @@ const props = defineProps({
 const onClickTd = () => {
     const tableData = store.state.tableData;
     if(tableData[props.rowIdx][props.cellIdx] === '') {
-        const turn = store.state.turn;
-        const turnCount = store.state.turnCount;
-
         store.commit('CLICK_CELL', { row : props.rowIdx, cell : props.cellIdx });
         store.commit('CHANGE_TURN');
         store.commit('UP_TURNCOUNT');
 
         let win = false;
 
-        if(tableData[props.rowIdx][0] === turn && tableData[props.rowIdx][1] === turn && tableData[props.rowIdx][2] === turn) {
+        if(tableData[props.rowIdx][0] === turn.value && tableData[props.rowIdx][1] === turn.value && tableData[props.rowIdx][2] === turn.value) {
             win = true;
         }
-        if(tableData[0][props.cellIdx] === turn && tableData[1][props.cellIdx] === turn && tableData[2][props.cellIdx] === turn) {
+        if(tableData[0][props.cellIdx] === turn.value && tableData[1][props.cellIdx] === turn.value && tableData[2][props.cellIdx] === turn.value) {
             win = true;
         }
-        if(tableData[0][0] === turn && tableData[1][1] === turn && tableData[2][2] === turn) {
+        if(tableData[0][0] === turn.value && tableData[1][1] === turn.value && tableData[2][2] === turn.value) {
             win = true;
         }
-        if(tableData[2][0] === turn && tableData[1][1] === turn && tableData[0][2] === turn) {
+        if(tableData[2][0] === turn.value && tableData[1][1] === turn.value && tableData[0][2] === turn.value) {
             win = true;
         }
         
         if(win) {
-            store.commit('SET_RESULT', turn + '승리');
+            console.log('win')
+            store.commit('SET_RESULT', turn.value + '승리');
             store.commit('RESET_GAME');
             return win;
         }
-        console.log(turnCount);
-        if(turnCount === 8) {
+        console.log(turnCount.value);
+        if(turnCount.value === 9) {
             store.commit('SET_RESULT', '무승부');
             store.commit('RESET_GAME');
             return;
