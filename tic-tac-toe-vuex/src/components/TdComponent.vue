@@ -25,13 +25,12 @@ let props = defineProps({
 
 
 const onClickTd = () => {
-    const tableData = store.state.tableData;
-    if(tableData[props.rowIdx][props.cellIdx] === '') {
+    if(tableDataCom.value[props.rowIdx][props.cellIdx] === '') {
         store.commit('CLICK_CELL', { row : props.rowIdx, cell : props.cellIdx });
-        store.commit('CHANGE_TURN');
         store.commit('UP_TURNCOUNT');
 
         let win = false;
+        const tableData = store.state.tableData;
 
         if(tableData[props.rowIdx][0] === turn.value && tableData[props.rowIdx][1] === turn.value && tableData[props.rowIdx][2] === turn.value) {
             win = true;
@@ -52,12 +51,14 @@ const onClickTd = () => {
             store.commit('RESET_GAME');
             return win;
         }
-        console.log(turnCount.value);
+
         if(turnCount.value === 9) {
             store.commit('SET_RESULT', '무승부');
             store.commit('RESET_GAME');
             return;
         }
+
+        store.commit('CHANGE_TURN');
     }
 }
 
