@@ -1,33 +1,17 @@
 <template>
-    <div>
-        <input type="number" placeholder="세로" :value="row" @change="onChangeRow">
-        <input type="number" placeholder="가로" :value="column" @change="onChangeColumn">
-        <input type="number" placeholder="가로" :value="mine" @change="onChangeMine">
-        <button type="button" @click="onClickBtn">시작</button>
-    </div>
+    <table>
+        <tr v-for="(rowData, idx) in tableData" :key="idx">
+            <td v-for="(columnData, idx) in rowData" :key="idx">{{ columnData }}</td>
+        </tr>
+    </table>
 </template>
 
 <script setup>
 import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 const store = useStore();
-let row = 0;
-let column = 0;
-let mine = 0;
-
-function onChangeRow(e) {
-    row = e.target.value;
-}
-function onChangeColumn(e) {
-    column = e.target.value;
-}
-function onChangeMine(e) {
-    mine = e.target.value;
-}
-function onClickBtn() {
-    store.commit('START_GAME', row, column, mine);
-}
-
+const tableData = computed(() => store.state.tableData);
 </script>
 
 <style scoped>

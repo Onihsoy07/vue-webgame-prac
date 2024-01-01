@@ -1,24 +1,28 @@
 <template>
     <div>
-        <mime-form />
-        <div>{{ timer }}</div>
-        <table-component></table-component>
+        <MimeForm />
+        <div style="margin-top: 20px;">타이머 : {{ timer }}</div>
+        <TableComponent></TableComponent>
         <div>{{ result }}</div>
     </div>
 </template>
 
 <script setup>
+import MimeForm from './MimeForm.vue';
+import TableComponent from './TableComponent.vue';
 import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 const store = useStore();
-const timer = store.state.timer;
-const result = store.state.result;
+const timer = computed(() => store.state.timer);
+const result = computed(() => store.state.result);
 
 
 </script>
 
 <style>
 table {
+    margin: 30px auto;
     border-collapse: collapse;
 }
 td {

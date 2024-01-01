@@ -1,13 +1,10 @@
 <template>
-  
+    <MimeSweeper></MimeSweeper>
 </template>
 
-<script>
-export default {
-  name: 'App',
-  components: {
-  }
-}
+<script setup>
+import MimeSweeper from './components/MimeSweeper.vue';
+
 </script>
 
 <style>
