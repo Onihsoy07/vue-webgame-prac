@@ -36,7 +36,7 @@ export default {
         }
     },
     watch: {
-
+        
     },
     props: {
         number: Number,

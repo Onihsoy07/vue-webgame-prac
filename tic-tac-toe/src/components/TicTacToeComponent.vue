@@ -9,12 +9,6 @@ export default{
     name: 'TicTacToe',
     data() {
         return {
-            tableData: [
-                ['', '', ''],
-                ['', '', ''],
-                ['', '', ''],
-            ],
-            turn: 'O',
 
         }
     },
@@ -23,6 +17,11 @@ export default{
     },
     components: {
         TableComponent,
+
+    },
+    props: {
+        tableData: Array,
+        turn: String,
 
     }
 };
