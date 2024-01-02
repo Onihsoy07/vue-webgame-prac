@@ -1,7 +1,7 @@
 <template>
     <table>
         <tr v-for="(rowData, rowIdx) in tableData" :key="rowIdx">
-            <td v-for="(columnData, columnIdx) in rowData" :key="columnIdx" :style="cellDataStyle(rowIdx, columnIdx)">{{ tableData[rowIdx][columnIdx] }}</td>
+            <td v-for="(columnData, columnIdx) in rowData" :key="columnIdx" :style="cellDataStyle(rowIdx, columnIdx)">{{ cellDataText(columnData) }}</td>
         </tr>
     </table>
 </template>
@@ -41,9 +41,23 @@ const cellDataStyle = computed((state) => (rowIdx, columnIdx) => {
             return {};        
     }
 });
-// const cellDataText = computed(() => {
-//     return null;
-// });
+const cellDataText = computed((state) => (cellData) => {
+    console.log(state);
+    switch(cellData) {
+        case CODE.NORMAL:
+            return '';
+        case CODE.MINE:
+            return 'X';
+        case CODE.FLAG:
+        case CODE.FLAG_MINE:
+            return '!';
+        case CODE.QUESTION:
+        case CODE.QUESTION_MINE:
+            return '?';
+        default:
+            return null;
+    }
+});
 
 
 </script>
