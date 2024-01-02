@@ -35,7 +35,6 @@ const plantMine = (row, column, mine) => {
 
     const data = [];
     let mineCount = 0;
-    let count = 0;
 
     for (let i = 0; i < row; i++) {
         const rowData = [];
@@ -46,10 +45,8 @@ const plantMine = (row, column, mine) => {
     }
 
     while(mineCount != mine) {
-        count++;
         const randomRow = Math.ceil(Math.random() * row) - 1;
         const randomColumn = Math.ceil(Math.random() * column) - 1;
-        console.log(randomRow, randomColumn, mineCount, count);
 
         if (data[randomRow][randomColumn] === -1) {
             data[randomRow][randomColumn] = CODE.MINE;
@@ -57,7 +54,6 @@ const plantMine = (row, column, mine) => {
         }
     }
 
-    console.log(data, mine);
     return data;
 };
 
