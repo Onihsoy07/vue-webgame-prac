@@ -54,6 +54,8 @@ const cellDataText = computed((state) => (cellData) => {
         case CODE.QUESTION:
         case CODE.QUESTION_MINE:
             return '?';
+        case CODE.CLICKED_MINE:
+            return '펑!';
         default:
             return null;
     }
