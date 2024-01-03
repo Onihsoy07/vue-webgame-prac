@@ -67,6 +67,7 @@ export default createStore({
         },
         timer: 0,
         result: '',
+        halted: true,
 
     },
     mutations: {
@@ -78,13 +79,16 @@ export default createStore({
             };
             state.tableData = plantMine(row, column, mine);
             state.timer = 0;
+            state.halted = false;
         },
         // [CLICK_CELL](state) {},
         // [CLICK_MINE](state) {},
         // [FLAG_CELL](state) {},
         // [QUESTION_CELL](state) {},
         // [NOMALIZE_CELL](state) {},
-        // [INCREMENT_TIMER](state) {},
+        [INCREMENT_TIMER](state) {
+            state.timer++;
+        },
     },
     getters: {
 

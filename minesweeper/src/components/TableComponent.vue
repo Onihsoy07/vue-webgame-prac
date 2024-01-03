@@ -20,7 +20,7 @@ const cellDataStyle = computed((state) => (rowIdx, columnIdx) => {
             return {};
         case CODE.MINE:
             return {
-                background: '#444',
+                background: 'gray',
             };
         case CODE.OPENED:
         case CODE.CLICKED_MINE:
@@ -65,5 +65,7 @@ const cellDataText = computed((state) => (cellData) => {
 </script>
 
 <style scoped>
-
+td {
+    color: black;
+}
 </style>

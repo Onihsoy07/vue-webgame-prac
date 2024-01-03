@@ -11,11 +11,28 @@
 import MimeForm from './MimeForm.vue';
 import TableComponent from './TableComponent.vue';
 import { useStore } from 'vuex';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 
 const store = useStore();
 const timer = computed(() => store.state.timer);
 const result = computed(() => store.state.result);
+const halted = computed(() => store.state.halted);
+
+let interval;
+
+watch(
+    halted,
+    (value) => {
+        // 게임 시작
+        if (value === false) {
+            interval = setInterval(() => {
+                store.commit('INCREMENT_TIMER');
+            }, 1000);
+        } else {
+            clearTimeout(interval);
+        }
+    }
+);
 
 
 </script>
