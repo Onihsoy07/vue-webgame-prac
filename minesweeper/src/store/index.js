@@ -81,10 +81,26 @@ export default createStore({
             state.timer = 0;
             state.halted = false;
         },
-        // [CLICK_CELL](state) {},
+        [CLICK_CELL](state, { row, column }) {
+            console.log(row, column);
+            switch(state.tableData[row][column]) {
+                case CODE.MINE:
+                    state.tableData[row][column] = CODE.CLICKED_MINE;
+                    break;
+                case CODE.NORMAL:
+                    state.tableData[row][column] = CODE.OPENED;
+                    break;
+                default:
+                    return;
+            }
+        },
         // [CLICK_MINE](state) {},
-        // [FLAG_CELL](state) {},
-        // [QUESTION_CELL](state) {},
+        [FLAG_CELL](state, { row, column }) {
+            (state.tableData[row][column] === CODE.MINE) ? (state.tableData[row][column] = CODE.FLAG_MINE) : (state.tableData[row][column] = CODE.FLAG)
+        },
+        [QUESTION_CELL](state, { row, column }) {
+            (state.tableData[row][column] === CODE.FLAG_MINE) ? (state.tableData[row][column] = CODE.QUESTION_MINE) : (state.tableData[row][column] = CODE.QUESTION)
+        },
         // [NOMALIZE_CELL](state) {},
         [INCREMENT_TIMER](state) {
             state.timer++;

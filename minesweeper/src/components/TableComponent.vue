@@ -1,7 +1,18 @@
 <template>
     <table>
-        <tr v-for="(rowData, rowIdx) in tableData" :key="rowIdx">
-            <td v-for="(columnData, columnIdx) in rowData" :key="columnIdx" :style="cellDataStyle(rowIdx, columnIdx)">{{ cellDataText(columnData) }}</td>
+        <tr
+            v-for="(rowData, rowIdx) in tableData"
+            :key="rowIdx"
+        >
+            <td
+                v-for="(columnData, columnIdx) in rowData" 
+                :key="columnIdx" 
+                :style="cellDataStyle(rowIdx, columnIdx)" 
+                @click="onClickTd(rowIdx, columnIdx)"
+                @contextmenu.prevent="onRightClickTd(rowIdx, columnIdx, columnData)"
+            >
+                {{ cellDataText(columnData) }}
+            </td>
         </tr>
     </table>
 </template>
@@ -13,11 +24,14 @@ import { CODE } from '../store/index';
 
 const store = useStore();
 const tableData = computed(() => store.state.tableData);
-const cellDataStyle = computed((state) => (rowIdx, columnIdx) => {
-    console.log(state);
+const halted = computed(() => store.state.halted);
+
+const cellDataStyle = computed(() => (rowIdx, columnIdx) => {
     switch(tableData.value[rowIdx][columnIdx]) {
         case CODE.NORMAL:
-            return {};
+            return {
+                background: 'gray',
+            };
         case CODE.MINE:
             return {
                 background: 'gray',
@@ -41,8 +55,7 @@ const cellDataStyle = computed((state) => (rowIdx, columnIdx) => {
             return {};        
     }
 });
-const cellDataText = computed((state) => (cellData) => {
-    console.log(state);
+const cellDataText = computed(() => (cellData) => {
     switch(cellData) {
         case CODE.NORMAL:
             return '';
@@ -61,6 +74,37 @@ const cellDataText = computed((state) => (cellData) => {
     }
 });
 
+function onClickTd(row, column) {
+    if (halted.value) {
+        return null;
+    }
+    store.commit('CLICK_CELL', { row, column })
+}
+function onRightClickTd(row, column, cellData) {
+    if (halted.value) {
+        return null;
+    }
+
+    switch(cellData) {
+        case CODE.NORMAL:
+        case CODE.MINE:
+            store.commit('FLAG_CELL', { row, column });
+            break;
+        case CODE.FLAG:
+        case CODE.FLAG_MINE:
+            store.commit('QUESTION_CELL', { row, column });
+            break;
+        case CODE.QUESTION:
+            store.state.tableData[row][column] = CODE.NORMAL;
+            break;
+        case CODE.QUESTION_MINE:
+            store.state.tableData[row][column] = CODE.MINE;
+            break;
+        default:
+            return;
+
+    }
+}
 
 </script>
 
