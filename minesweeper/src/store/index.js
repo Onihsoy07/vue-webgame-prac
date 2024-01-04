@@ -85,7 +85,10 @@ export default createStore({
             console.log(row, column);
             switch(state.tableData[row][column]) {
                 case CODE.MINE:
+                case CODE.FLAG_MINE:
+                case CODE.QUESTION_MINE:
                     state.tableData[row][column] = CODE.CLICKED_MINE;
+                    state.halted = true;
                     break;
                 case CODE.NORMAL:
                     state.tableData[row][column] = CODE.OPENED;
