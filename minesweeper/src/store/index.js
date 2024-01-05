@@ -57,6 +57,19 @@ const plantMine = (row, column, mine) => {
     return data;
 };
 
+const nearMineCount = (row, column, endRow, endColumn) => {
+    const startCellIndex = [
+        (row - 1 < 0) ? 0 : (row - 1),
+        (column - 1 < 0) ? 0 : (column - 1)
+    ];
+    const endCellIndex = [
+        (row + 1 >=  endRow) ? row : (row + 1),
+        (column + 1 >= endColumn) ? column : (column + 1)
+    ];
+
+    console.log(row, column, endRow, endColumn, startCellIndex, endCellIndex);
+}
+
 export default createStore({
     state: {
         tableData: [],
@@ -72,7 +85,7 @@ export default createStore({
     },
     mutations: {
         [START_GAME](state, { row, column, mine }) {
-            state.date = {
+            state.data = {
                 row,
                 column,
                 mine
@@ -82,7 +95,6 @@ export default createStore({
             state.halted = false;
         },
         [CLICK_CELL](state, { row, column }) {
-            console.log(row, column);
             switch(state.tableData[row][column]) {
                 case CODE.MINE:
                 case CODE.FLAG_MINE:
@@ -91,13 +103,15 @@ export default createStore({
                     state.halted = true;
                     break;
                 case CODE.NORMAL:
+                case CODE.FLAG:
+                case CODE.QUESTION:
                     state.tableData[row][column] = CODE.OPENED;
+                    nearMineCount(row, column, state.data.row, state.data.column);
                     break;
                 default:
                     return;
             }
         },
-        // [CLICK_MINE](state) {},
         [FLAG_CELL](state, { row, column }) {
             (state.tableData[row][column] === CODE.MINE) ? (state.tableData[row][column] = CODE.FLAG_MINE) : (state.tableData[row][column] = CODE.FLAG)
         },
