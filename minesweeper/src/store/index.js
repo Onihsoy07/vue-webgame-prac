@@ -57,7 +57,8 @@ const plantMine = (row, column, mine) => {
     return data;
 };
 
-const nearMineCount = (row, column, endRow, endColumn) => {
+const countNearMine = (row, column, endRow, endColumn, tableData) => {
+    let nearMineCount = 0;
     const startCellIndex = [
         (row - 1 < 0) ? 0 : (row - 1),
         (column - 1 < 0) ? 0 : (column - 1)
@@ -67,8 +68,22 @@ const nearMineCount = (row, column, endRow, endColumn) => {
         (column + 1 >= endColumn) ? column : (column + 1)
     ];
 
-    console.log(row, column, endRow, endColumn, startCellIndex, endCellIndex);
-}
+    for (let i = startCellIndex[0]; i <= endCellIndex[0]; i++) {
+        for (let j = startCellIndex[1]; j <= endCellIndex[1]; j++) {
+            switch(tableData[i][j]) {
+                case CODE.MINE:
+                case CODE.FLAG_MINE:
+                case CODE.QUESTION_MINE:
+                    nearMineCount++;
+                    continue;
+                default:
+                    continue;
+            }
+        }
+    }
+    
+    return (nearMineCount === 0) ? '' : nearMineCount;
+};
 
 export default createStore({
     state: {
@@ -105,8 +120,7 @@ export default createStore({
                 case CODE.NORMAL:
                 case CODE.FLAG:
                 case CODE.QUESTION:
-                    state.tableData[row][column] = CODE.OPENED;
-                    nearMineCount(row, column, state.data.row, state.data.column);
+                    state.tableData[row][column] = countNearMine(row, column, state.data.row, state.data.column, state.tableData);
                     break;
                 default:
                     return;

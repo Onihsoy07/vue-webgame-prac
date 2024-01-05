@@ -70,7 +70,7 @@ const cellDataText = computed(() => (cellData) => {
         case CODE.CLICKED_MINE:
             return '펑!';
         default:
-            return null;
+            return cellData;
     }
 });
 
