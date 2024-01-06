@@ -60,7 +60,7 @@ const cellDataText = computed(() => (cellData) => {
         case CODE.NORMAL:
             return '';
         case CODE.MINE:
-            return 'X';
+            return '';
         case CODE.FLAG:
         case CODE.FLAG_MINE:
             return '!';

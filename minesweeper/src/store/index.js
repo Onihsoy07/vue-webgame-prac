@@ -68,6 +68,7 @@ export default createStore({
         timer: 0,
         result: '',
         halted: true,
+        nomalCellCount: 0,
 
     },
     mutations: {
@@ -80,11 +81,13 @@ export default createStore({
             state.tableData = plantMine(row, column, mine);
             state.timer = 0;
             state.halted = false;
+            state.nomalCellCount = (row * column) - mine;
         },
         [CLICK_CELL](state, { row, column }) {
             const checked = [];
 
             const countNearMine = (row, column) => {
+                state.nomalCellCount--;
                 checked.push([row, column]);
                 let nearMineCount = 0;
                 const startCellIndex = [
@@ -129,11 +132,20 @@ export default createStore({
                 case CODE.QUESTION_MINE:
                     state.tableData[row][column] = CODE.CLICKED_MINE;
                     state.halted = true;
+                    setTimeout(() => {
+                        alert('실패하셨습니다.');
+                    }, 100);
                     break;
                 case CODE.NORMAL:
                 case CODE.FLAG:
                 case CODE.QUESTION:
                     countNearMine(row, column);
+                    if (state.nomalCellCount === 0) {
+                        state.halted = true;
+                        setTimeout(() => {
+                            alert('모든 지뢰를 찾으셨습니다.');
+                        }, 100);
+                    }
                     break;
                 default:
                     return;
