@@ -82,7 +82,10 @@ export default createStore({
             state.halted = false;
         },
         [CLICK_CELL](state, { row, column }) {
-            const countNearMine = () => {
+            const checked = [];
+
+            const countNearMine = (row, column) => {
+                checked.push([row, column]);
                 let nearMineCount = 0;
                 const startCellIndex = [
                     (row - 1 < 0) ? 0 : (row - 1),
@@ -107,7 +110,17 @@ export default createStore({
                     }
                 }
                 
-                return (nearMineCount === 0) ? '' : nearMineCount;
+                state.tableData[row][column] = (nearMineCount === 0) ? '' : nearMineCount;
+
+                if (nearMineCount === 0) {
+                    for (let i = startCellIndex[0]; i <= endCellIndex[0]; i++) {
+                        for (let j = startCellIndex[1]; j <= endCellIndex[1]; j++) {
+                            if (!checked.includes([i, j]) && state.tableData[i][j] === -1) {
+                                countNearMine(i, j);
+                            }
+                        }
+                    }
+                }
             };
 
             switch(state.tableData[row][column]) {
@@ -120,7 +133,7 @@ export default createStore({
                 case CODE.NORMAL:
                 case CODE.FLAG:
                 case CODE.QUESTION:
-                    state.tableData[row][column] = countNearMine();
+                    countNearMine(row, column);
                     break;
                 default:
                     return;
