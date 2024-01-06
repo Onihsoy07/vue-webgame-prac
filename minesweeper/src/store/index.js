@@ -57,34 +57,6 @@ const plantMine = (row, column, mine) => {
     return data;
 };
 
-const countNearMine = (row, column, endRow, endColumn, tableData) => {
-    let nearMineCount = 0;
-    const startCellIndex = [
-        (row - 1 < 0) ? 0 : (row - 1),
-        (column - 1 < 0) ? 0 : (column - 1)
-    ];
-    const endCellIndex = [
-        (row + 1 >=  endRow) ? row : (row + 1),
-        (column + 1 >= endColumn) ? column : (column + 1)
-    ];
-
-    for (let i = startCellIndex[0]; i <= endCellIndex[0]; i++) {
-        for (let j = startCellIndex[1]; j <= endCellIndex[1]; j++) {
-            switch(tableData[i][j]) {
-                case CODE.MINE:
-                case CODE.FLAG_MINE:
-                case CODE.QUESTION_MINE:
-                    nearMineCount++;
-                    continue;
-                default:
-                    continue;
-            }
-        }
-    }
-    
-    return (nearMineCount === 0) ? '' : nearMineCount;
-};
-
 export default createStore({
     state: {
         tableData: [],
@@ -110,6 +82,34 @@ export default createStore({
             state.halted = false;
         },
         [CLICK_CELL](state, { row, column }) {
+            const countNearMine = () => {
+                let nearMineCount = 0;
+                const startCellIndex = [
+                    (row - 1 < 0) ? 0 : (row - 1),
+                    (column - 1 < 0) ? 0 : (column - 1)
+                ];
+                const endCellIndex = [
+                    (row + 1 >=  state.data.row) ? row : (row + 1),
+                    (column + 1 >= state.data.column) ? column : (column + 1)
+                ];
+            
+                for (let i = startCellIndex[0]; i <= endCellIndex[0]; i++) {
+                    for (let j = startCellIndex[1]; j <= endCellIndex[1]; j++) {
+                        switch(state.tableData[i][j]) {
+                            case CODE.MINE:
+                            case CODE.FLAG_MINE:
+                            case CODE.QUESTION_MINE:
+                                nearMineCount++;
+                                continue;
+                            default:
+                                continue;
+                        }
+                    }
+                }
+                
+                return (nearMineCount === 0) ? '' : nearMineCount;
+            };
+
             switch(state.tableData[row][column]) {
                 case CODE.MINE:
                 case CODE.FLAG_MINE:
@@ -120,7 +120,7 @@ export default createStore({
                 case CODE.NORMAL:
                 case CODE.FLAG:
                 case CODE.QUESTION:
-                    state.tableData[row][column] = countNearMine(row, column, state.data.row, state.data.column, state.tableData);
+                    state.tableData[row][column] = countNearMine();
                     break;
                 default:
                     return;
