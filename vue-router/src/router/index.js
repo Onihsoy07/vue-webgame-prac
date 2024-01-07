@@ -1,9 +1,9 @@
 import { createWebHistory, createRouter } from 'vue-router';
-import NumberBaseball from '../../../number-baseball3/src/App';
+import NumberBaseball from '../../../number-baseball3/src/components/NumberBaseball';
 import ResponseCheck from '../../../response-check/src/components/ResponseCheck';
 import Lotto from '../../../lotto/src/components/LottoGenerator';
-import RockScissorsPaper from '../../../rock-scissors-paper/src/App';
-import mineSweeper from '../../../minesweeper/src/App';
+import RockScissorsPaper from '../../../rock-scissors-paper/src/components/RockScissorsPaper';
+import mineSweeper from '../../../minesweeper/src/components/MimeSweeper';
 
 const router = createRouter({
     history : createWebHistory(),
