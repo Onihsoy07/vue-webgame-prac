@@ -1,6 +1,7 @@
 <template>
   <div>
     <div>
+      <router-link to="/game/index" style="margin: 10px;">게임매쳐</router-link>
       <router-link to="/number-baseball" style="margin: 10px;">숫자야구</router-link>
       <router-link to="/response-check" style="margin: 10px;">반응속도</router-link>
       <router-link to="/lotto" style="margin: 10px;">로또생성기</router-link>

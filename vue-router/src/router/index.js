@@ -6,6 +6,7 @@ import RockScissorsPaper from '../../../rock-scissors-paper/src/components/RockS
 import MineSweeper from '../../../minesweeper/src/components/MimeSweeper';
 import InnerResponseCheck from '@/components/response-check/ResponseCheck';
 import InnerLottoGenerator from '@/components/lotto-generator/LottoGenerator';
+import GameMatcher from '@/components/GameMatcher';
 
 const router = createRouter({
     history : createWebHistory(),
@@ -44,6 +45,11 @@ const router = createRouter({
             path : "/inner-respone-check", 
             name : "", 
             component : InnerResponseCheck 
+        },
+        { 
+            path : "/game/:name", 
+            name : "", 
+            component : GameMatcher 
         },
     ]
 });
