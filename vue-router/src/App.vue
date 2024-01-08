@@ -6,6 +6,8 @@
       <router-link to="/lotto" style="margin: 10px;">로또생성기</router-link>
       <router-link to="/rock-scissors-paper" style="margin: 10px;">가위바위보</router-link>
       <router-link to="/mine-sweeper" style="margin: 10px;">지뢰찾기</router-link>
+      <router-link to="/inner-lotto-generator" style="margin: 10px;">내부로또</router-link>
+      <router-link to="/inner-respone-check" style="margin: 10px;">내부반응속도</router-link>
     </div>
     <router-view></router-view>
   </div>
