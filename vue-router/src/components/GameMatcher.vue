@@ -9,25 +9,22 @@
     </div>
 </template>
 
-<script>
-export default {
-    mounted() {
-        console.log(this.$router);
-        console.log(this.$route);
-    },
-    computed: {
-        currentGame() {
-            return this.$route.params.name;
-        }
-    }
-};
+<script setup>
+import { onMounted, computed } from 'vue';
+import { useRouter, useRoute } from 'vue-router';
 
-// import { onMounted } from 'vue';
+const router = useRouter();
+const route = useRoute();
 
-// onMounted(() => {
-//     console.log(this.$router);
-//     console.log(this.$router);
-// });
+const currentGame = computed(() => {
+    console.log(route.params.name);
+    return route.params.name;
+});
+
+onMounted(() => {
+    console.log(router);
+    console.log(route);
+});
 </script>
 
 <style scoped>
