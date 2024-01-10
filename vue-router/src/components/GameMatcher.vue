@@ -20,6 +20,7 @@ const route = useRoute();
 
 const currentGame = computed(() => {
     console.log(route.params.name);
+    console.log(route.query.page);
     return route.params.name;
 });
 
